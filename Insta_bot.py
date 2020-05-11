@@ -37,6 +37,10 @@ class insta_bot():
 			.send_keys(Keys.RETURN)
 		sleep(5)
 
+def follow():
+	sleep(1)
+	browser.find_element_by_xpath("//button[contains(text(), 'Follow')]").click()
+
 def first_post(): 
 	# finds the first post 
 	pic = browser.find_element_by_class_name("_9AhH0") 
@@ -72,21 +76,52 @@ def like_till_the_end():
 			break
 		next_el = next_post()
 
+def comment_post(message):
+	sleep(2)
+	#finds the comment's area and clicks on it
+	comment = browser.find_element_by_xpath('/html/body/div[4]/div[2]/div/article/div[2]/section[3]/div/form/textarea')
+	comment.click()
+	sleep(2)
+	#Types the comment
+	browser.find_element_by_xpath('/html/body/div[4]/div[2]/div/article/div[2]/section[3]/div/form/textarea').send_keys(message)
+	sleep(1)
+	#Posts the comment
+	browser.find_element_by_xpath("//button[contains(text(), 'Post')]").click()
+
+def comment_till_the_end(): 
+	next_el = browser.find_element_by_xpath('/html/body/div[4]/div[1]/div/div/a')
+	while(True): 
+		# if next button is there then 
+		if next_el != False: 
+			# click the next button 
+			next_el.click() 
+			sleep(2) 
+			# comments on the post 
+			comment_post(msg)	 
+			sleep(2)			 
+		else: 
+			print("The End") 
+			break
+		next_el = next_post()
+
 
 username = input("Enter the username of your account : ")
 password = input("Enter the password of your account : ")
 like_acc = input("Enter the Account name you want to spam likes : ")
+msg = input("Enter the comment you want to spam : ")
 exe_path = input("Enter the path of your driver : ")
 global browser
-browser = webdriver.Firefox(executable_path = exe_path)
+browser = webdriver.Firefox(executable_path = exe_path) #Gets the geckodriver
 
-my_bot = insta_bot(username,password)
-my_bot.finduser(like_acc)
+my_bot = insta_bot(username,password) # logs in your account
+my_bot.finduser(like_acc) # finds the account your looking for
 
-first_post() 
-like_post() 
-like_till_the_end()
-
+#follow()		# use this to follow an account
+#first_post() 	# use this to select the first post
+#like_post() 	# use this to like only once
+#like_till_the_end()	# use this to spam likes on all posts
+#comment_post(msg)		# use this to comment on a post
+#comment_till_the_end()	# use this to comment on all posts 
 
 my_bot.quit(5)
 
