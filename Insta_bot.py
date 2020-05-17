@@ -100,7 +100,7 @@ def comment_till_the_end():
 			sleep(2)	
 			next_el = next_post()		 
 		except Exception as e: 
-			print("The last pose") #When it reaches the end 
+			print("The last post") #When it reaches the end 
 			break
 		
 
