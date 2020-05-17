@@ -63,19 +63,18 @@ def next_post():
 def like_till_the_end(): 
 	next_el = browser.find_element_by_xpath('/html/body/div[4]/div[1]/div/div/a')
 	while(True): 
-		# if next button is there then 
-		if next_el != False: 
+		try: 
 			# click the next button 
 			next_el.click() 
 			sleep(2) 
 			# like the post 
 			like_post()	 
-			sleep(2)			 
-		else: 
-			print("The End")  #it will show an error at the end , recommended to fix it 
+			sleep(2)	
+			next_el = next_post()		 
+		except Exception as e: 
+			print("The last post")  #When it reaches the end 
 			break
-		next_el = next_post()
-
+		
 def comment_post(message):
 	sleep(2)
 	#finds the comment's area and clicks on it
@@ -92,17 +91,18 @@ def comment_till_the_end():
 	next_el = browser.find_element_by_xpath('/html/body/div[4]/div[1]/div/div/a')
 	while(True): 
 		# if next button is there then 
-		if next_el != False: 
+		try: 
 			# click the next button 
 			next_el.click() 
 			sleep(2) 
 			# comments on the post 
 			comment_post(msg)	 
-			sleep(2)			 
-		else: 
-			print("The End") 
+			sleep(2)	
+			next_el = next_post()		 
+		except Exception as e: 
+			print("The last pose") #When it reaches the end 
 			break
-		next_el = next_post()
+		
 
 
 username = input("Enter the username of your account : ")
